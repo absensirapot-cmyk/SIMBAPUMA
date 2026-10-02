@@ -1,0 +1,110 @@
+@import "tailwindcss";
+
+@layer utilities {
+  /* Print Optimization: Clean, Multi-Page Natural Document Printing */
+  @media print {
+    /* Hide navigation, action buttons, form inputs, and non-printable overlays */
+    nav,
+    header,
+    footer,
+    aside,
+    button,
+    input,
+    select,
+    textarea,
+    .no-print,
+    .print\:hidden {
+      display: none !important;
+    }
+
+    /* Reset page containers for print to natural document flow */
+    html, body, #root, main {
+      background: white !important;
+      color: black !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      overflow: visible !important;
+      position: static !important;
+    }
+
+    /* Un-fix any modal overlay / backdrop holding printable documents so it can paginate */
+    .fixed:has(.printable-document),
+    div:has(> .printable-document),
+    div:has(> * > .printable-document) {
+      position: static !important;
+      inset: auto !important;
+      z-index: auto !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      height: auto !important;
+      max-height: none !important;
+      overflow: visible !important;
+      background: white !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      transform: none !important;
+    }
+
+    /* Printable document container: MUST be position: static for multi-page pagination */
+    .printable-document {
+      display: block !important;
+      position: static !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      background: white !important;
+      overflow: visible !important;
+      float: none !important;
+    }
+
+    /* Crisp borders & pagination for tables inside printable document */
+    .printable-document table {
+      width: 100% !important;
+      border-collapse: collapse !important;
+      border-color: #334155 !important;
+    }
+
+    .printable-document thead {
+      display: table-header-group !important;
+    }
+
+    .printable-document tfoot {
+      display: table-footer-group !important;
+    }
+
+    .printable-document tr {
+      break-inside: avoid !important;
+      page-break-inside: avoid !important;
+    }
+
+    .printable-document th,
+    .printable-document td {
+      border-color: #334155 !important;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+
+    /* Page settings */
+    @page {
+      size: auto;
+      margin: 10mm 12mm 12mm 12mm;
+    }
+
+    /* Force color and background print fidelity */
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+  }
+}
+
